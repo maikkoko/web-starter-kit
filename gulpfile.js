@@ -4,6 +4,8 @@ var sass        = require('gulp-sass');
 var browserSync = require('browser-sync');
 var prefix      = require('gulp-autoprefixer');
 var cleanCSS    = require('gulp-clean-css');
+var concat      = require('gulp-concat');
+var uglify      = require('gulp-uglify');
 var out         = require('gulp-out');
 var runSequence = require('run-sequence');
 var del         = require('del');
@@ -14,6 +16,7 @@ gulp.task('browserSync', function() {
     server: {
       baseDir: 'dist'
     },
+    port: 8000,
     notify: false
   })
 });
@@ -47,17 +50,27 @@ gulp.task('sass', function(){
     .pipe(browserSync.reload({stream:true})); // Reloads browser after processing
 });
 
+// Concatenates all js files and minifies it using uglifier
+gulp.task('js', function() {
+  gulp.src(['app/assets/javascript/index.js', 'app/assets/javascript/**/*.js'])
+    .pipe(concat('main.js'))
+    .pipe(uglify())
+    .pipe(out('./dist/{basename}.min{extension}'))
+    .pipe(browserSync.reload({stream:true}));
+});
+
 // Listens/Watchers for changes and reloads
 gulp.task('watch', function (){
   gulp.watch('app/assets/stylesheets/**', ['sass']);
   gulp.watch('app/slim/**', ['slim']);
+  gulp.watch('app/assets/javascript/**', ['js']);
 });
 
 // Wipes dist folder and repopulates (remove non-used files)
 gulp.task('rebuild', function (callback) {
-  runSequence('clean:dist', ['sass', 'slim'], callback);
+  runSequence('clean:dist', ['sass', 'slim', 'js'], callback);
 });
 
 gulp.task('default', function (callback) {
-  runSequence(['sass', 'slim', 'browserSync', 'watch'], callback);
+  runSequence(['sass', 'slim', 'js', 'browserSync', 'watch'], callback);
 });
