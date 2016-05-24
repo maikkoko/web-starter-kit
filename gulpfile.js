@@ -14,7 +14,7 @@ var del         = require('del');
 gulp.task('browserSync', function() {
   browserSync.init({
     server: {
-      baseDir: 'dist'
+      baseDir: './dist'
     },
     port: 8000,
     notify: false
@@ -23,47 +23,48 @@ gulp.task('browserSync', function() {
 
 // Deletes the whole dist folder (a.k.a directory cleaning)
 gulp.task('clean:dist', function() {
-  return del.sync('dist/*');
+  return del.sync('./dist/*');
 });
 
 // Slim preprocessor
 gulp.task('slim', function(){
-  gulp.src("app/slim/*.slim")
+  gulp.src("./app/slim/*.slim")
     .pipe(slim({
       pretty: true
     }))
-    .pipe(gulp.dest("dist/"))
-    .pipe(browserSync.reload({stream:true})); // Reloads browser after processing
+    .pipe(gulp.dest("./dist/"))
+    // .pipe(browserSync.reload({stream:true})); // Reloads browser after processing
 });
 
 // Sass preprocessor
 gulp.task('sass', function(){
-  return gulp.src('app/assets/stylesheets/main.sass')
+  return gulp.src('./app/assets/stylesheets/main.sass')
     .pipe(sass({
-      includePaths: ['app/assets/stylesheets'],
+      includePaths: ['./app/assets/stylesheets'],
       onError: browserSync.notify
     }))
     .pipe(prefix(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Prefixes vendor shit on css for compatibility
-    .pipe(gulp.dest('app/assets/stylesheets'))
+    .pipe(gulp.dest('./app/assets/stylesheets'))
     .pipe(cleanCSS()) // Minify css for production
     .pipe(out('./dist/{basename}.min{extension}')) // add '.min.css'
-    .pipe(browserSync.reload({stream:true})); // Reloads browser after processing
+    // .pipe(browserSync.reload({stream: true}));
 });
 
 // Concatenates all js files and minifies it using uglifier
 gulp.task('js', function() {
-  gulp.src(['app/assets/javascript/index.js', 'app/assets/javascript/**/*.js'])
+  gulp.src(['./app/assets/javascript/index.js', 'app/assets/javascript/**/*.js'])
     .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(out('./dist/{basename}.min{extension}'))
-    .pipe(browserSync.reload({stream:true}));
+    // .pipe(browserSync.reload({stream:true}));
 });
 
 // Listens/Watchers for changes and reloads
 gulp.task('watch', function (){
-  gulp.watch('app/assets/stylesheets/**', ['sass']);
-  gulp.watch('app/slim/**', ['slim']);
-  gulp.watch('app/assets/javascript/**', ['js']);
+  gulp.watch('./app/assets/stylesheets/**', ['sass']);
+  gulp.watch('./app/slim/**', ['slim']);
+  gulp.watch('./app/assets/javascript/**', ['js']);
+  gulp.watch('./dist/*', browserSync.reload);
 });
 
 // Wipes dist folder and repopulates (remove non-used files)
@@ -72,5 +73,5 @@ gulp.task('rebuild', function (callback) {
 });
 
 gulp.task('default', function (callback) {
-  runSequence(['sass', 'slim', 'js', 'browserSync', 'watch'], callback);
+  runSequence(['browserSync', 'watch', 'sass', 'slim', 'js'], callback);
 });

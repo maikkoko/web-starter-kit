@@ -1,3 +1,9 @@
+html {
+  background-color: black;
+  color: white; }
+
+/**
+  Tools such as normalize and other global/prestyling things needed */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
   font-family: sans-serif;
@@ -178,3 +184,84 @@ table {
 td,
 th {
   padding: 0; }
+
+/* row */
+.row {
+  margin: 0 auto;
+  width: 1200px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0;
+  background-color: yellow; }
+
+/* columns */
+.column {
+  margin: 10px 0 10px 10px; }
+  .column:first-child {
+    margin-left: 0; }
+
+.col-12 {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-11 {
+  width: -webkit-calc(100% / 12 * 11);
+  width: calc(100% / 12 * 11);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-10 {
+  width: -webkit-calc(100% / 12 * 10);
+  width: calc(100% / 12 * 10);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-9 {
+  width: -webkit-calc(100% / 12 * 9);
+  width: calc(100% / 12 * 9);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-8 {
+  width: -webkit-calc(100% / 12 * 8);
+  width: calc(100% / 12 * 8);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-7 {
+  width: -webkit-calc(100% / 12 * 7);
+  width: calc(100% / 12 * 7);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-6 {
+  width: -webkit-calc(100% / 12 * 6);
+  width: calc(100% / 12 * 6);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-5 {
+  width: -webkit-calc(100% / 12 * 5);
+  width: calc(100% / 12 * 5);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-4 {
+  width: -webkit-calc(100% / 12 * 4);
+  width: calc(100% / 12 * 4);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-3 {
+  width: -webkit-calc(100% / 12 * 3);
+  width: calc(100% / 12 * 3);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-2 {
+  width: -webkit-calc(100% / 12 * 2);
+  width: calc(100% / 12 * 2);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+.col-1 {
+  width: -webkit-calc(100% / 12);
+  width: calc(100% / 12);
+  background-color: rgba(0, 0, 0, 0.1); }
+
+/**
+  Add global styles here */
+/**
+  Import specific styles */
